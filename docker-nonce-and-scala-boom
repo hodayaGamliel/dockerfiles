@@ -39,7 +39,7 @@ ENV TAKIPI_HEAP_SIZE 200m
 ENV MAVEN_OTS -agentlib:TakipiAgent
 
 
-RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVHo5AaZWkYezWKlxiHD8JShqYWvmqpwdU=#66cc
+RUN /opt/takipi/etc/takipi-setup-secret-key S13....
 
 # Set server name
 RUN /opt/takipi/etc/takipi-setup-machine-name docker-server-name
