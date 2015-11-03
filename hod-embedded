@@ -1,0 +1,48 @@
+# tomcat embedded only - without browsing
+#
+
+# Takipi
+#
+# Installs and runs Takipi with a Java tester
+
+# Start with a working oracle jdk 7 image
+FROM java:7
+
+MAINTAINER Chen Harel "https://github.com/chook"
+
+# Getting Java testers
+RUN apt-get update
+RUN apt-get install -y git
+RUN apt-get install -y maven2
+RUN git clone https://github.com/hodayagamliel/hod-embedded.git
+
+
+# Installing Takipi via apt-get and setting up key
+RUN echo "deb [arch=amd64] http://takipi-deb-repo.s3.amazonaws.com stable main" > /etc/apt/sources.list.d/takipi.list
+ENV DEBIAN_FRONTEND noninteractive
+RUN wget -O - http://takipi-deb-repo.s3.amazonaws.com/hello@takipi.com.gpg.key | apt-key add -
+RUN apt-get update
+RUN apt-get install takipi
+
+# Overriding binaries with the Heroku version of Takipi
+RUN wget https://s3.amazonaws.com/app-takipi-com/deploy/linux/takipi-latest-heroku.tar.gz -O takipi-heroku.tar.gz
+RUN tar zxvf takipi-heroku.tar.gz
+#RUN mv .takipi takipi
+RUN cp -r takipi /opt
+
+ENV PATH $PATH:/opt/takipi/bin
+ENV TAKIPI_SERVICE_PARAMS --xmx=180M
+ENV TAKIPI_HEAP_SIZE 200m
+ENV MAVEN_OTS -agentlib:TakipiAgent
+
+
+RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVHo5AaZWkYezWKlxiHD8JShqYWvmqpwdU=#66cc
+
+# Set server name
+RUN /opt/takipi/etc/takipi-setup-machine-name docker-server-name
+
+# Running Java process with Takipi agent
+
+RUN mvn compile package
+
+CMD mvn tomcat7:run
