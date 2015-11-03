@@ -1,6 +1,3 @@
-# tomcat embedded only - without browsing
-#
-
 # Takipi
 #
 # Installs and runs Takipi with a Java tester
@@ -10,12 +7,11 @@ FROM java:7
 
 MAINTAINER Chen Harel "https://github.com/chook"
 
-# Getting Java testers
+# Getting Java tester
 RUN apt-get update
 RUN apt-get install -y git
 RUN apt-get install -y maven2
 RUN git clone https://github.com/hodayagamliel/hod-embedded.git
-
 
 # Installing Takipi via apt-get and setting up key
 RUN echo "deb [arch=amd64] http://takipi-deb-repo.s3.amazonaws.com stable main" > /etc/apt/sources.list.d/takipi.list
@@ -35,14 +31,11 @@ ENV TAKIPI_SERVICE_PARAMS --xmx=180M
 ENV TAKIPI_HEAP_SIZE 200m
 ENV MAVEN_OTS -agentlib:TakipiAgent
 
-
 RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVHo5AaZWkYezWKlxiHD8JShqYWvmqpwdU=#66cc
 
 # Set server name
-RUN /opt/takipi/etc/takipi-setup-machine-name docker-server-name
+RUN /opt/takipi/etc/takipi-setup-machine-name webapp-tomcat-embedded
 
-# Running Java process with Takipi agent
-
+# Running Java process
 RUN mvn compile package
-
 CMD mvn tomcat7:run

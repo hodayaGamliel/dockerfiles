@@ -18,6 +18,11 @@ RUN cd /opt/dotcms ; wget http://dotcms.com/physical_downloads/release_builds/do
 RUN cd /opt/dotcms ; tar -zxvf dotcms_3.2.4.tar.gz?r=1446468935220
 RUN chmod 777 -R /opt/dotcms
 RUN ln -s /usr/bin/java /bin/java
+#RUN cd /opt/dotcms/bin ; ./buildwar.sh
+#RUN cd /opt/dotcms ; cp ./docs/examples/websphere/mail.jar ./dotserver/tomcat-8.0.18/lib/mail.jar
+#RUN cd /opt/dotcms ; rm -r ./dotserver/tomcat-8.0.18/webapps/ROOT/*
+#RUN cd /opt/dotcms ; unzip WAR/dotcms.war -d dotserver/tomcat-8.0.18/webapps/ROOT/
+#RUN cd /opt/dotcms ; cp ./dotserver/tomcat-8.0.18/conf/context.xml ./dotserver/tomcat-8.0.18/webapps/ROOT/META-INF/context.xml
 RUN cd /opt/dotcms ; touch ./dotserver/tomcat-8.0.18/bin/setenv.sh
 RUN echo 'CATALINA_OPTS=$CATALINA_OPTS -Dfile.encoding=UTF8 -server -Xmx4G -XX:MaxPermSize=512m -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -agentlib:TakipiAgent' > /opt/dotcms/dotserver/tomcat-8.0.18/bin/setenv.sh
 RUN echo 'export CATALINA_OPTS' >> /opt/dotcms/dotserver/tomcat-8.0.18/bin/setenv.sh
@@ -25,6 +30,8 @@ RUN echo 'export CATALINA_OPTS' >> /opt/dotcms/dotserver/tomcat-8.0.18/bin/seten
 ENV ENV_A JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Xverify:none -Dfile.encoding=UTF8 -server -Xmx1G -XX:MaxPermSize=256m -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -javaagent:$DOTCMS_HOME/WEB-INF/lib/dot.jamm-0.2.5_1.jar"
 ENV ENV_B JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Xverify:none -Dfile.encoding=UTF8 -server -Xmx1G -XX:MaxPermSize=256m -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -agentlib:TakipiAgent -javaagent:$DOTCMS_HOME/WEB-INF/lib/dot.jamm-0.2.5_1.jar"
 RUN sed -i -e 's/ENV_A/ENV_B/g'  /opt/dotcms/dotserver/tomcat-8.0.18/bin/dotStartup.sh
+
+#RUN cd /opt/dotcms/dotserver/tomcat-8.0.18/bin ; ./dotStartup.sh
 
 # download tester
 RUN cd /opt/dotcms ; git clone https://github.com/hodayagamliel/dotcms_tester.git
@@ -52,8 +59,8 @@ RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVH
 # Set server name
 RUN /opt/takipi/etc/takipi-setup-machine-name docker-server-name
 
-# Running Dotcms with Tomcat
-RUN cd /opt/dotcms/dotserver/tomcat-8.0.18/bin ; ./dotStartup.sh
+# Running Java process with Takipi agent
 
-# Running auto browsing via siege and curl
+#RUN cd /opt/dotcms/dotserver/tomcat-8.0.18/bin ; ./dotStartup.sh
+
 CMD cd /opt/dotcms/dotcms_tester ; ./dotcms-tester.sh
