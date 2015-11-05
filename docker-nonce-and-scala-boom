@@ -42,7 +42,7 @@ ENV MAVEN_OTS -agentlib:TakipiAgent
 RUN /opt/takipi/etc/takipi-setup-secret-key S13....
 
 # Set server name
-RUN /opt/takipi/etc/takipi-setup-machine-name docker-server-name
+RUN /opt/takipi/etc/takipi-setup-machine-name takipi-testers-docker
 
 # Running run_testers bash who run Java-statistics and Scala-boom with Takipi agent
 
