@@ -38,5 +38,5 @@ RUN /opt/takipi/etc/takipi-setup-machine-name webapp-tomcat-embedded
 
 # Running Java process
 
-CMD (mvn compile package) && \
-  (mvn tomcat7:run)
+CMD (cd hod-embedded ; mvn compile package) && \
+  (cd hod-embedded ; mvn tomcat7:run)
