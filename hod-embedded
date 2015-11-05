@@ -34,7 +34,7 @@ ENV MAVEN_OPTS -agentlib:TakipiAgent
 RUN /opt/takipi/etc/takipi-setup-secret-key S13...
 
 # Set server name
-RUN /opt/takipi/etc/takipi-setup-machine-name dotcms-tomcat-docker
+RUN /opt/takipi/etc/takipi-setup-machine-name tomcat-embedded-docker
 # Running Java process
 RUN 
 CMD (mvn compile package) &&/
