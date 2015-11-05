@@ -29,7 +29,7 @@ RUN cp -r takipi /opt
 ENV PATH $PATH:/opt/takipi/bin
 ENV TAKIPI_SERVICE_PARAMS --xmx=180M
 ENV TAKIPI_HEAP_SIZE 200m
-ENV MAVEN_OTS -agentlib:TakipiAgent
+ENV MAVEN_OPTS -agentlib:TakipiAgent
 
 RUN /opt/takipi/etc/takipi-setup-secret-key S13...
 
@@ -37,5 +37,6 @@ RUN /opt/takipi/etc/takipi-setup-secret-key S13...
 RUN /opt/takipi/etc/takipi-setup-machine-name webapp-tomcat-embedded
 
 # Running Java process
-RUN mvn compile package
-CMD mvn tomcat7:run
+RUN 
+CMD (mvn compile package) &&/
+  (mvn tomcat7:run)
