@@ -36,7 +36,6 @@ RUN cp -r takipi /opt
 ENV PATH $PATH:/opt/takipi/bin
 ENV TAKIPI_SERVICE_PARAMS --xmx=180M
 ENV TAKIPI_HEAP_SIZE 200m
-ENV MAVEN_OTS -agentlib:TakipiAgent
 
 
 RUN /opt/takipi/etc/takipi-setup-secret-key S13....
