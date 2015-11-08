@@ -20,7 +20,7 @@ ENV PATH $PATH:/opt/takipi/bin
 
 # Setup Takipi key and name
 RUN /opt/takipi/etc/takipi-setup-secret-key S13...
-RUN /opt/takipi/etc/takipi-setup-machine-name server-name
+RUN /opt/takipi/etc/takipi-setup-machine-name tomcat-embedded-docker
 
 # Getting Java tester
 RUN apt-get update
