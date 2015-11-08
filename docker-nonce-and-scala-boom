@@ -13,12 +13,11 @@ MAINTAINER Chen Harel "https://github.com/chook"
 # Getting Java testers
 RUN apt-get update
 RUN apt-get install -y git
-RUN apt-get install -y maven2
 
 # Getting testers and run_testers bash from github
 RUN cd /opt ; git clone https://github.com/hodayagamliel/statistics-tester-java.git
 RUN cd /opt ; wget https://s3.amazonaws.com/app-takipi-com/chen/scala-boom.jar -O scala-boom.jar
-RUN cd /opt ; git clone https://github.com/hodayagamliel/docker_hodaya.git
+# RUN cd /opt ; git clone https://github.com/hodayagamliel/docker_hodaya.git
 
 # Installing Takipi via apt-get and setting up key
 RUN echo "deb [arch=amd64] http://takipi-deb-repo.s3.amazonaws.com stable main" > /etc/apt/sources.list.d/takipi.list
@@ -38,11 +37,12 @@ ENV TAKIPI_SERVICE_PARAMS --xmx=180M
 ENV TAKIPI_HEAP_SIZE 200m
 
 
-RUN /opt/takipi/etc/takipi-setup-secret-key S13....
+RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVHo5AaZWkYezWKlxiHD8JShqYWvmqpwdU=#66cc
 
 # Set server name
 RUN /opt/takipi/etc/takipi-setup-machine-name takipi-testers-docker
 
 # Running run_testers bash who run Java-statistics and Scala-boom with Takipi agent
 
-CMD cd /opt/docker_hodaya ; ./run_testers.sh
+CMD  (nohup /opt/statistics-tester-java/java_nonce_create.sh 2 1000 &) && \
+	(java -agentlib:TakipiAgent -jar /opt/scala-boom.jar)
