@@ -1,5 +1,8 @@
-# Start with a  working oracle jdk 7 image
-FROM java:7
+# statistics , nonce and tomcat embedded
+#
+# Takipi
+#
+# Installs and runs Takipi with a Java tester
 
 MAINTAINER Chen Harel "https://github.com/chook"
 
