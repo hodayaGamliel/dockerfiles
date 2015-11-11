@@ -3,36 +3,36 @@
 # Installs and runs Takipi with a Java tester
 
 # Pull base image.
-FROM ubuntu:14.04
+FROM java:7
 
 MAINTAINER Chen Harel "https://github.com/chook"
 
 # Install JDK8
-RUN apt-get update
-RUN apt-get install -y wget openjdk-8-jdk
+#RUN apt-get update
+#RUN apt-get install -y wget openjdk-8-jdk
 
 # Needed for Ubuntu 15.10, October 2015
 RUN update-ca-certificates -f
 
-# Get Takipi for containers 
+# Get Takipi for containers
 RUN echo "deb [arch=amd64] http://takipi-tfc-deb-repo.s3.amazonaws.com stable main" > /etc/apt/sources.list.d/takipi.list
 RUN wget -O - http://s3.amazonaws.com/takipi-tfc-deb-repo/hello%40takipi.com.gpg.key | apt-key add -
 RUN apt-get update
 RUN apt-get install -y takipi
 ENV PATH $PATH:/opt/takipi/bin
 ENV TAKIPI_HEAP_SIZE 200m
-#ENV MAVEN_OPTS -agentlib:TakipiAgent
+ENV MAVEN_OPTS -agentlib:TakipiAgent
 
 # Setup Takipi key and name
-RUN /opt/takipi/etc/takipi-setup-secret-key S13...
+RUN /opt/takipi/etc/takipi-setup-secret-key S13136#hQQtJMeUoKi4C/P/#NeahtjCVpNVHo5AaZWkYezWKlxiHD8JShqYWvmqpwdU=#66cc
 RUN /opt/takipi/etc/takipi-setup-machine-name tomcat-embedded-docker
 
 # Getting Java tester
 RUN apt-get update
 RUN apt-get install -y git
 RUN apt-get install -y maven2
-RUN git clone https://github.com/hodayagamliel/hod-embedded.git
+RUN cd /opt ; git clone https://github.com/hodayagamliel/hod-embedded.git
 
 # Running Java process
-CMD (mvn compile package) && /
-  (mvn -agentlib:TakipiAgent tomcat7:run)
+CMD  (cd /opt/hod-embedded ; mvn compile package) && \
+  (cd /opt/hod-embedded ; mvn tomcat7:run)
