@@ -18,7 +18,7 @@ RUN wget -O - http://s3.amazonaws.com/takipi-tfc-deb-repo/hello%40takipi.com.gpg
 RUN apt-get update
 RUN apt-get install -y takipi
 ENV PATH $PATH:/opt/takipi/bin
-ENV TAKIPI_HEAP_SIZE 50m
+ENV TAKIPI_HEAP_SIZE 30m
 
 
 # Setup Takipi key and name
