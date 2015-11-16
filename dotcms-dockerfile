@@ -50,6 +50,6 @@ ENV ENV_B JAVA_OPTS="$JAVA_OPTS -Djava.awt.headless=true -Xverify:none -Dfile.en
 
 # Running auto browsing via siege and curl
 CMD (sed -i -e 's/ENV_A/ENV_B/g'  /opt/dotcms/dotserver/tomcat-8.0.18/bin/dotStartup.sh) && \
-  (cd /opt/dotcms/dotserver/tomcat-8.0.18/bin ; ./dotStartup.sh)  &&  \
-  (sleep 30) && \
-	(cd /opt/dotcms/dotcms_tester ; ./dotcms-tester.sh)
+  (cd /opt/dotcms/dotserver/tomcat-8.0.18/bin ; ./dotStartup.sh)  # &&  \
+#  (sleep 30) && \
+#	(cd /opt/dotcms/dotcms_tester ; ./dotcms-tester.sh)
