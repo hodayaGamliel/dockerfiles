@@ -32,7 +32,7 @@ RUN chmod +x /opt/dotcms/dotserver/tomcat-8.0.18/bin/setenv.sh
 RUN echo 'CATALINA_OPTS=$CATALINA_OPTS -Dfile.encoding=UTF8 -server -Xmx4G -XX:MaxPermSize=512m -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC -agentlib:TakipiAgent' > /opt/dotcms/dotserver/tomcat-8.0.18/bin/setenv.sh
 RUN echo 'export CATALINA_OPTS' >> /opt/dotcms/dotserver/tomcat-8.0.18/bin/setenv.sh
 
-
+ENV TAKIPI_HEAP_SIZE 50m
 ENV JAVA_OPTS $JAVA_OPTS -agentlib:TakipiAgent
 
 # Running auto browsing via siege and curl
